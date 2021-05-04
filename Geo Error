@@ -1,0 +1,175 @@
+//
+//  t.swift
+//  FP
+//
+//  Created by Jonathan Soliman on 2021-04-28.
+//
+
+import SwiftUI
+
+
+
+struct t: View {
+    
+        @State var show = false
+        @State var show2 = false
+        @State var info = saintInfo
+        
+        var body: some View {
+            
+           
+                ZStack {
+                    
+                    VStack {
+                        
+                        
+                        Spacer()
+                    }
+                    
+                    
+                     ScrollView(showsIndicators: false) {
+                    VStack{
+                        Text("Fasting and prayer are those which the righteous and the just and the cross-bearers pursued until they dwelt in the mountains and deserts and holes of the earth because of their great love for Christ the King.")
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            .frame(width: 370,  alignment: .center)
+                            .background(Color.gray.opacity(0.5))
+                            .cornerRadius(30)
+                            .padding(.top)
+                            
+                            
+                        
+                        ForEach(info.indices, id: \.self) { index in
+                            GeometryReader { geomatry in
+                                
+                                HStack {
+                                    SaintCard(show: self.$info[index].show)
+                                        
+                                }
+                                .offset(y: self.info[index].show ? -geomatry.frame(in: .global).minY : 0)
+                                
+                                
+                            }
+                            .frame(height:200)
+                            .frame(maxWidth: self.info[index].show ? .infinity : 300)
+                            .zIndex(self.info[index].show ? 1 : 0)
+                           
+                        }
+                        
+                    }
+                    
+                }
+            }
+            //.ignoresSafeArea()
+            
+            
+        }
+        
+    }
+
+    struct t_Previews: PreviewProvider {
+        static var previews: some View {
+            
+            t()
+            
+            
+            
+        }
+    }
+
+
+
+
+
+
+    struct SaintCard: View {
+        @Binding var show :Bool
+        
+        var body: some View {
+            ZStack (alignment: .top) {
+                
+                
+                
+                
+                
+                
+                VStack () {
+                    
+                    
+                    Spacer()
+                    
+                    ZStack {
+                        Image(uiImage: #imageLiteral(resourceName: "image-removebg-preview"))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .offset(x: show ? 140 : 55, y: show ? 120 : 40)
+                            .opacity(show ? 0.5 : 1)
+                        Rectangle()
+                            .foregroundColor(.white)
+                            .opacity(show ? 0.7 : 0)
+                        
+                        VStack {
+                            HStack {
+                                Text("St.Moses")
+                                    .padding(show ? 20 : 0)
+                                    .font(.system(size: show ? 40 : 20))
+                                
+                                Spacer()
+                            }
+                            Spacer()
+                        } .padding()
+                        
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                    Spacer()
+                    
+                    
+                }
+                .frame(maxWidth: show ? .infinity : 300, maxHeight: show ? .infinity : 200, alignment: .center)
+                .background(Color(.gray))
+                .cornerRadius(15)
+                .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0))
+                .onTapGesture {
+                    self.show.toggle()
+                }
+                .edgesIgnoringSafeArea(.all)
+                
+                
+                
+                ZStack {
+                    
+                    
+                    
+                    Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla suscipit, turpis ac dictum gravida, est ante auctor justo, ac lobortis quam nibh sit amet nunc. Pellentesque ac urna eu lorem sodales vulputate. Pellentesque imperdiet enim eu lorem tincidunt, sit amet tempor nisi sollicitudin. Praesent vel tempus arcu. Maecenas at est euismod velit pretium rutrum vitae ut magna. Phasellus orci nibh, commodo eget vehicula id, aliquet et felis. Vestibulum ut felis vitae libero varius rhoncus. Nulla hendrerit lorem eros, id ullamcorper risus maximus sed.")
+                        
+                        .frame(maxWidth: show ? .infinity : 300,maxHeight: show ? .infinity : 200, alignment: .center)
+                        .padding()
+                        .opacity( show ? 1 : 0)
+                        .animation(.easeInOut, value: true)
+                    
+                    
+                }
+            }
+            .frame(height: show ? screen.height : 200)
+            
+        }
+    }
+
+    struct info : Identifiable{
+        var id = UUID()
+        var title: String
+        var text: String
+        var image: UIImage
+        var color: UIColor
+        var show: Bool
+    }
+
+    var saintInfo = [info(title: "St.Moses", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla suscipit, turpis ac dictum gravida, est ante auctor justo, ac lobortis quam nibh sit amet nunc. Pellentesque ac urna eu lorem sodales vulputate. Pellentesque imperdiet enim eu lorem tincidunt, sit amet tempor nisi sollicitudin. Praesent vel tempus arcu. Maecenas at est euismod velit pretium rutrum vitae ut magna. Phasellus orci nibh, commodo eget vehicula id, aliquet et felis. Vestibulum ut felis vitae libero varius rhoncus. Nulla hendrerit lorem eros, id ullamcorper risus maximus sed.", image: #imageLiteral(resourceName: "image-removebg-preview"), color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1), show: false),
+                      info(title: "St.Moses", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla suscipit, turpis ac dictum gravida, est ante auctor justo, ac lobortis quam nibh sit amet nunc. Pellentesque ac urna eu lorem sodales vulputate. Pellentesque imperdiet enim eu lorem tincidunt, sit amet tempor nisi sollicitudin. Praesent vel tempus arcu. Maecenas at est euismod velit pretium rutrum vitae ut magna. Phasellus orci nibh, commodo eget vehicula id, aliquet et felis. Vestibulum ut felis vitae libero varius rhoncus. Nulla hendrerit lorem eros, id ullamcorper risus maximus sed.", image: #imageLiteral(resourceName: "image-removebg-preview"), color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1), show: false),
+                      info(title: "St.Moses", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla suscipit, turpis ac dictum gravida, est ante auctor justo, ac lobortis quam nibh sit amet nunc. Pellentesque ac urna eu lorem sodales vulputate. Pellentesque imperdiet enim eu lorem tincidunt, sit amet tempor nisi sollicitudin. Praesent vel tempus arcu. Maecenas at est euismod velit pretium rutrum vitae ut magna. Phasellus orci nibh, commodo eget vehicula id, aliquet et felis. Vestibulum ut felis vitae libero varius rhoncus. Nulla hendrerit lorem eros, id ullamcorper risus maximus sed.", image: #imageLiteral(resourceName: "image-removebg-preview"), color: #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1), show: false)]
+
